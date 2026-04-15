@@ -44,6 +44,12 @@ class Appointment extends Model
         return $this->hasOne(ServiceRecord::class);
     }
 
+    // This appointment has many status history records
+    public function statusHistories()
+    {
+        return $this->hasMany(AppointmentStatusHistory::class)->orderByDesc('changed_at');
+    }
+
     // Helper: check if appointment is completed
     public function isCompleted()
     {

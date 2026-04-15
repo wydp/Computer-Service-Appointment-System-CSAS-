@@ -43,4 +43,41 @@ class ServiceRecordController extends Controller
 
         return back()->with('success', 'Service record saved!');
     }
+
+    // Show edit form for service record description
+    public function edit(ServiceRecord $serviceRecord)
+    {
+        // Only allow original staff or admin to edit
+        $isAuthorized = auth()->id() === $serviceRecord->staff_id || auth()->user()->isAdmin();
+
+        if (!$isAuthorized) {
+            return redirect()->route('service-records.index')
+                ->with('error', 'You are not authorized to edit this service record.');
+        }
+
+        return view('service-records.edit', compact('serviceRecord'));
+    }
+
+    // Update service record (description only)
+    public function update(Request $request, ServiceRecord $serviceRecord)
+    {
+        // Only allow original staff or admin to edit
+        $isAuthorized = auth()->id() === $serviceRecord->staff_id || auth()->user()->isAdmin();
+
+        if (!$isAuthorized) {
+            return redirect()->route('service-records.index')
+                ->with('error', 'You are not authorized to edit this service record.');
+        }
+
+        $request->validate([
+            'description' => 'required|string',
+        ]);
+
+        $serviceRecord->update([
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('service-records.index')
+            ->with('success', 'Service record description updated successfully!');
+    }
 }

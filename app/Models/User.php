@@ -42,6 +42,18 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class, 'created_by');
     }
 
+    // One user can make many status history changes
+    public function statusHistoryChanges()
+    {
+        return $this->hasMany(AppointmentStatusHistory::class, 'changed_by_user_id');
+    }
+
+    // One user can complete many services
+    public function completedServices()
+    {
+        return $this->hasMany(AppointmentStatusHistory::class, 'service_completed_by_user_id');
+    }
+
     // Helper functions to check role
     public function isAdmin()
     {

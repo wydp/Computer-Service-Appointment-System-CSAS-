@@ -1,3 +1,189 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Professional Black & White Color System */
+:root {
+    /* Primary Colors */
+    --black: #000000;
+    --white: #FFFFFF;
+    --dark-gray: #2D2D2D;
+    --medium-gray: #666666;
+    --light-gray: #E5E5E5;
+    --very-light-gray: #F5F5F5;
+
+    /* Status Colors (Keep as is) */
+    --status-completed: #00AA00;
+    --status-confirmed: #0066CC;
+    --status-scheduled: #666666;
+    --status-cancelled: #CC0000;
+    --status-no-show: #FF6600;
+}
+
+/* Enhanced Sidebar Styling */
+.sidebar {
+    background: linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+}
+
+.sidebar .h-14 {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Definitions */
+@layer components {
+    /* Dark Gradient */
+    .gradient-dark {
+        background: linear-gradient(135deg, #2D2D2D 0%, #000000 100%);
+    }
+
+    /* Button Primary - Black with white text */
+    .btn-gradient-primary {
+        @apply inline-flex items-center px-6 py-2.5 bg-black border-2 border-black rounded-lg font-semibold text-sm text-white uppercase tracking-widest;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-gradient-primary:hover {
+        @apply bg-gray-900 border-gray-900 shadow-lg;
+    }
+
+    .btn-gradient-primary:active {
+        @apply bg-black;
+    }
+
+    .btn-gradient-primary:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+
+    /* Button Secondary - White with black border */
+    .btn-gradient-secondary {
+        @apply inline-flex items-center px-6 py-2.5 bg-white border-2 border-black rounded-lg font-semibold text-sm text-black uppercase tracking-widest;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-gradient-secondary:hover {
+        @apply bg-gray-100 shadow-md;
+    }
+
+    .btn-gradient-secondary:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+
+    /* Button Danger - Red styling */
+    .btn-gradient-danger {
+        @apply inline-flex items-center px-6 py-2.5 bg-red-600 border-2 border-red-600 rounded-lg font-semibold text-sm text-white uppercase tracking-widest;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-gradient-danger:hover {
+        @apply bg-red-700 border-red-700 shadow-lg;
+    }
+
+    .btn-gradient-danger:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+
+    /* Button Primary (Non-gradient) */
+    .btn-primary {
+        @apply inline-flex items-center px-6 py-2.5 bg-black border-2 border-black rounded-lg font-semibold text-sm text-white;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-primary:hover {
+        @apply bg-gray-900 border-gray-900 shadow-lg;
+    }
+
+    .btn-primary:active {
+        @apply bg-black;
+    }
+
+    /* Input with black focus */
+    .input-gradient {
+        @apply w-full px-4 py-2.5 border-2 border-gray-300 rounded-lg bg-white text-black font-medium;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .input-gradient:focus {
+        @apply outline-none border-black shadow-lg shadow-black/10;
+    }
+
+    /* Loading Spinner - Black */
+    .spinner-gold {
+        @apply inline-block w-5 h-5 border-2 border-current border-r-transparent rounded-full;
+        animation: spin 0.8s linear infinite;
+        color: #000000;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Status Badges - Keep original colors */
+    .badge-completed {
+        @apply inline-block px-3 py-1 bg-green-600 text-white font-semibold text-xs rounded-full;
+    }
+
+    .badge-confirmed {
+        @apply inline-block px-3 py-1 bg-blue-600 text-white font-semibold text-xs rounded-full;
+    }
+
+    .badge-scheduled {
+        @apply inline-block px-3 py-1 bg-gray-600 text-white font-semibold text-xs rounded-full;
+    }
+
+    .badge-cancelled {
+        @apply inline-block px-3 py-1 bg-red-600 text-white font-semibold text-xs rounded-full;
+    }
+
+    .badge-no_show {
+        @apply inline-block px-3 py-1 bg-orange-600 text-white font-semibold text-xs rounded-full;
+    }
+
+    /* Glass Card */
+    .glass-card {
+        @apply bg-white/95 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl;
+    }
+
+    /* Underline Effect */
+    .gold-underline {
+        @apply relative inline-block;
+    }
+
+    .gold-underline::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-0 h-1 bg-black transition-all duration-300;
+    }
+
+    .gold-underline:hover::after {
+        @apply w-full;
+    }
+
+    /* Glow Effect - Black */
+    .gold-glow {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Toast Notifications */
+    .toast-success {
+        @apply fixed bottom-6 right-6 px-6 py-4 bg-green-600 text-white rounded-lg shadow-lg font-semibold flex items-center gap-3 z-50;
+        animation: slideInRight 0.3s ease-out;
+    }
+
+    .toast-error {
+        @apply fixed bottom-6 right-6 px-6 py-4 bg-red-600 text-white rounded-lg shadow-lg font-semibold flex items-center gap-3 z-50;
+        animation: slideInRight 0.3s ease-out;
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+}

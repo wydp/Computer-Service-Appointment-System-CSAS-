@@ -53,8 +53,10 @@ Route::middleware(['auth'])->group(function () {
 
     // ── Service Records ───────────────────────────────────────
     Route::prefix('service-records')->name('service-records.')->group(function () {
-        Route::get('/',  [ServiceRecordController::class, 'index'])->name('index');
-        Route::post('/', [ServiceRecordController::class, 'store'])->name('store');
+        Route::get('/',                           [ServiceRecordController::class, 'index'])  ->name('index');
+        Route::post('/',                          [ServiceRecordController::class, 'store'])  ->name('store');
+        Route::get('/{serviceRecord}/edit',       [ServiceRecordController::class, 'edit'])   ->name('edit');
+        Route::patch('/{serviceRecord}',          [ServiceRecordController::class, 'update']) ->name('update');
     });
 
     // ── Reports ───────────────────────────────────────────────
@@ -69,7 +71,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/',         [UserController::class, 'store']) ->name('store');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
-    
+
+    // ── API Routes ────────────────────────────────────────────
+    Route::prefix('api')->group(function () {
+        Route::get('/appointments/{appointment}/tracking', [AppointmentController::class, 'getTracking']);
+    });
 
 });
 
