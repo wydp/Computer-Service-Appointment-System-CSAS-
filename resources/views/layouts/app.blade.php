@@ -11,7 +11,7 @@
     <style>
         * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
 
-        /* Base Colors - Industrial Gray Scale */
+        /* Base Colors - Professional Black & White */
         :root {
             --bg-primary: #F8F9FA;
             --bg-secondary: #FFFFFF;
@@ -24,7 +24,7 @@
             --sidebar-bg: linear-gradient(180deg, #2D2D2D 0%, #0F0F0F 100%);
             --accent: #2D2D2D;
             --accent-hover: #1A1A1A;
-            --gold: #FFD700;
+            --primary: #000000;
         }
 
         body {
@@ -40,7 +40,7 @@
         }
 
         .sidebar .h-14 {
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-link {
@@ -50,18 +50,18 @@
         }
 
         .nav-link:hover {
-            color: #FFD700;
-            background: rgba(255, 215, 0, 0.08);
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .nav-link.active {
-            color: #FFD700;
-            background: rgba(255, 215, 0, 0.12);
-            border-left: 3px solid #FFD700;
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.12);
+            border-left: 3px solid #FFFFFF;
         }
 
         .nav-dot {
-            background: #FFD700;
+            background: #FFFFFF;
             width: 4px;
             height: 4px;
             border-radius: 50%;
@@ -77,14 +77,14 @@
         }
 
         .card:hover {
-            border-color: rgba(255, 215, 0, 0.3);
+            border-color: var(--border-light);
         }
 
         /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, #2D2D2D 0%, #0F0F0F 100%);
             color: #FFFFFF;
-            border: 2px solid #FFD700;
+            border: 2px solid #000000;
             border-radius: 8px;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
@@ -93,13 +93,13 @@
 
         .btn-primary:hover {
             background: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             transform: scale(1.05);
         }
 
         .btn-primary:active {
             transform: scale(1);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:disabled {
@@ -119,8 +119,8 @@
 
         .btn-secondary:hover {
             background: var(--bg-tertiary);
-            border-color: var(--gold);
-            color: var(--gold);
+            border-color: #000000;
+            color: #000000;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
@@ -164,8 +164,8 @@
         }
 
         .input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.08);
+            border-color: #000000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
             background: var(--bg-secondary);
         }
 
@@ -186,27 +186,27 @@
         }
 
         .badge-confirmed {
-            background: #4A5568;
+            background: #0066CC;
             color: #FFFFFF;
-            border: 1px solid #5A6578;
+            border: 1px solid #0052A3;
         }
 
         .badge-completed {
-            background: #FFD700;
-            color: #0F0F0F;
-            border: 1px solid #DAA520;
+            background: #00AA00;
+            color: #FFFFFF;
+            border: 1px solid #008800;
         }
 
         .badge-cancelled {
-            background: #6B2C2C;
+            background: #CC0000;
             color: #FFFFFF;
-            border: 1px solid #8B3A3A;
+            border: 1px solid #990000;
         }
 
         .badge-no_show {
-            background: #6B7280;
+            background: #FF6600;
             color: #FFFFFF;
-            border: 1px solid #7B8290;
+            border: 1px solid #CC5200;
         }
 
         /* Tables */

@@ -170,7 +170,7 @@ new #[Layout('layouts.guest')] class extends Component
                 href="{{ route('login') }}"
                 wire:navigate
                 style="font-size: 13px; color: #2D2D2D; text-decoration: none; font-weight: 500; transition: all 0.2s;"
-                onmouseover="this.style.color='#FFD700'"
+                onmouseover="this.style.color='#666666'"
                 onmouseout="this.style.color='#2D2D2D'"
             >
                 {{ __('Already registered?') }}

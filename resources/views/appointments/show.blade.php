@@ -123,14 +123,14 @@ function selectStatus(event, status) {
 </script>
 
 {{-- Status History Timeline --}}
-<div class="card p-7 mb-6" style="max-width:780px;">
+<div class="card p-7 mb-6" style="max-width:780px;cursor:pointer;" onclick="openTrackingModal({{ $appointment->id }})">
     <p style="font-size:13px;font-weight:600;color:#1A1A1A;margin-bottom:20px;">Status History</p>
     <div style="position:relative;">
         @forelse($appointment->statusHistories as $history)
         <div style="display:flex;gap:16px;margin-bottom:{{ $loop->last ? '0' : '20px' }};">
             {{-- Timeline dot --}}
             <div style="display:flex;flex-direction:column;align-items:center;">
-                <div style="width:12px;height:12px;background:#FFD700;border:3px solid #F5F5F5;border-radius:50%;position:relative;z-index:2;"></div>
+                <div style="width:12px;height:12px;background:#000000;border:3px solid #F5F5F5;border-radius:50%;position:relative;z-index:2;"></div>
                 @if(!$loop->last)
                 <div style="width:2px;height:32px;background:#E5E5E5;margin-top:8px;"></div>
                 @endif

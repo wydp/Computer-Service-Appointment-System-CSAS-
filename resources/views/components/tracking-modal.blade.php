@@ -1,52 +1,57 @@
-<!-- Tracking Modal with Progress Timeline -->
+<!-- Shopee-Style Tracking Modal -->
 <div id="trackingModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;padding:20px;overflow-y:auto;">
-    <div style="background:#FFFFFF;border:1px solid #E5E5E5;border-radius:12px;max-width:600px;margin:40px auto;box-shadow:0 20px 60px rgba(0,0,0,0.15);animation:slideUp 0.3s ease-out;">
+    <div style="background:#FFFFFF;border-radius:12px;max-width:700px;margin:40px auto;box-shadow:0 20px 60px rgba(0,0,0,0.15);animation:slideUp 0.3s ease-out;">
         <!-- Header -->
-        <div style="padding:24px;border-bottom:1px solid #E5E5E5;display:flex;align-items:center;justify-content:space-between;background:#F8F9FA;">
+        <div style="padding:24px;border-bottom:1px solid #E5E5E5;display:flex;align-items:center;justify-content:space-between;background:#FFFFFF;">
             <div>
-                <h2 style="font-size:18px;font-weight:700;color:#000000;margin:0;">Appointment Tracking</h2>
-                <p style="font-size:12px;color:#666666;margin:6px 0 0 0;">Complete status journey</p>
+                <h2 style="font-size:18px;font-weight:700;color:#000000;margin:0;">Appointment Status Tracking</h2>
+                <p style="font-size:12px;color:#999999;margin:6px 0 0 0;">Track your appointment progress</p>
             </div>
-            <button onclick="closeTrackingModal()" style="background:none;border:none;cursor:pointer;font-size:24px;color:#999999;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:color 0.2s;" onmouseover="this.style.color='#000000'" onmouseout="this.style.color='#999999'">×</button>
+            <button onclick="closeTrackingModal()" style="background:none;border:none;cursor:pointer;font-size:28px;color:#999999;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:color 0.2s;" onmouseover="this.style.color='#000000'" onmouseout="this.style.color='#999999'">×</button>
         </div>
 
-        <!-- Appointment Summary -->
+        <!-- Appointment Info -->
         <div id="appointmentInfo" style="padding:24px;border-bottom:1px solid #E5E5E5;background:#FFFFFF;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
                 <div>
-                    <p style="font-size:11px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
+                    <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
                     <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
                 </div>
                 <div>
-                    <p style="font-size:11px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Service</p>
+                    <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Service</p>
                     <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
                 </div>
             </div>
-            <div>
-                <p style="font-size:11px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Date & Time</p>
-                <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                <div>
+                    <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Date</p>
+                    <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
+                </div>
+                <div>
+                    <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Time</p>
+                    <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
+                </div>
             </div>
         </div>
 
-        <!-- Progress Timeline -->
-        <div style="padding:24px;border-bottom:1px solid #E5E5E5;">
-            <p style="font-size:12px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:20px;">Status Journey</p>
-            <div id="progressTimeline" style="position:relative;">
+        <!-- Progress Timeline (Shopee-style horizontal) -->
+        <div style="padding:32px 24px;border-bottom:1px solid #E5E5E5;background:#FFFFFF;">
+            <div id="progressTimeline" style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;">
                 <!-- Generated by JavaScript -->
             </div>
         </div>
 
-        <!-- Status Change History -->
-        <div style="padding:24px;">
-            <p style="font-size:12px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:16px;">Change History</p>
-            <div id="trackingTimeline" style="position:relative;">
+        <!-- Status Details -->
+        <div style="padding:24px;background:#FFFFFF;">
+            <p style="font-size:12px;font-weight:600;color:#000000;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:20px;">Status Timeline</p>
+            <div id="trackingTimeline" style="max-height:300px;overflow-y:auto;">
                 <!-- Will be populated by JavaScript -->
             </div>
         </div>
 
         <!-- Footer -->
         <div style="padding:20px;border-top:1px solid #E5E5E5;text-align:right;background:#F8F9FA;">
-            <button onclick="closeTrackingModal()" style="background:#000000;border:1px solid #000000;color:#FFFFFF;padding:10px 24px;border-radius:6px;cursor:pointer;font-weight:500;font-size:14px;transition:all 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Close</button>
+            <button onclick="closeTrackingModal()" style="background:#000000;border:none;color:#FFFFFF;padding:10px 24px;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;transition:all 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Close</button>
         </div>
     </div>
 </div>
@@ -54,11 +59,19 @@
 <script>
 const STATUS_SEQUENCE = ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'];
 const STATUS_LABELS = {
-    'scheduled': 'Scheduled',
+    'scheduled': 'Order Placed',
     'confirmed': 'Confirmed',
     'completed': 'Completed',
     'cancelled': 'Cancelled',
     'no_show': 'No Show'
+};
+
+const STATUS_ICONS = {
+    'scheduled': '📋',
+    'confirmed': '✓',
+    'completed': '✓',
+    'cancelled': '✕',
+    'no_show': '–'
 };
 
 function openTrackingModal(appointmentId) {
@@ -67,20 +80,27 @@ function openTrackingModal(appointmentId) {
         .then(data => {
             // Populate appointment info
             const appointmentInfo = document.getElementById('appointmentInfo');
+            const dateTime = data.appointment.date_time.split(' at ');
             appointmentInfo.innerHTML = `
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
                     <div>
-                        <p style="font-size:11px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
+                        <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
                         <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${data.appointment.client_name}</p>
                     </div>
                     <div>
-                        <p style="font-size:11px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Service</p>
+                        <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Service</p>
                         <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${data.appointment.service_type}</p>
                     </div>
                 </div>
-                <div>
-                    <p style="font-size:11px;font-weight:600;color:#666666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Date & Time</p>
-                    <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${data.appointment.date_time}</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div>
+                        <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Date</p>
+                        <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${dateTime[0]}</p>
+                    </div>
+                    <div>
+                        <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Time</p>
+                        <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${dateTime[1] || '—'}</p>
+                    </div>
                 </div>
             `;
 
@@ -90,22 +110,23 @@ function openTrackingModal(appointmentId) {
             // Populate history timeline
             const timeline = document.getElementById('trackingTimeline');
             timeline.innerHTML = data.tracking.map((item, index) => `
-                <div style="display:flex;gap:16px;margin-bottom:${index === data.tracking.length - 1 ? '0' : '24px'};">
-                    <div style="display:flex;flex-direction:column;align-items:center;">
-                        <div style="width:12px;height:12px;background:#000000;border:3px solid #FFFFFF;border-radius:50%;position:relative;z-index:2;"></div>
-                        ${index !== data.tracking.length - 1 ? '<div style="width:2px;height:40px;background:#E5E5E5;margin-top:8px;"></div>' : ''}
+                <div style="display:flex;gap:12px;margin-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};padding-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};border-bottom:${index === data.tracking.length - 1 ? 'none' : '1px solid #E5E5E5'}">
+                    <div style="display:flex;flex-direction:column;align-items:center;min-width:24px;">
+                        <div style="width:8px;height:8px;background:#000000;border-radius:50%;position:relative;z-index:2;"></div>
                     </div>
-                    <div style="flex:1;padding-top:2px;">
+                    <div style="flex:1;">
                         <p style="font-size:13px;font-weight:600;color:#000000;margin-bottom:4px;">${item.status_change}</p>
-                        <p style="font-size:12px;color:#666666;margin-bottom:6px;">Changed by <span style="font-weight:600;">${item.changed_by}</span></p>
-                        ${item.service_completed_by ? `<p style="font-size:12px;color:#666666;margin-bottom:6px;">Service completed by <span style="font-weight:600;">${item.service_completed_by}</span></p>` : ''}
+                        <p style="font-size:12px;color:#999999;margin-bottom:4px;">By ${item.changed_by}</p>
+                        ${item.service_completed_by ? `<p style="font-size:12px;color:#999999;margin-bottom:4px;">Service by ${item.service_completed_by}</p>` : ''}
                         <p style="font-size:12px;color:#999999;">${item.timestamp}</p>
-                        ${item.notes ? `<p style="font-size:12px;color:#555555;margin-top:8px;font-style:italic;">"${item.notes}"</p>` : ''}
+                        ${item.notes ? `<p style="font-size:12px;color:#666666;margin-top:8px;font-style:italic;">&quot;${item.notes}&quot;</p>` : ''}
                     </div>
                 </div>
             `).join('');
 
             document.getElementById('trackingModal').style.display = 'flex';
+            document.getElementById('trackingModal').style.alignItems = 'flex-start';
+            document.getElementById('trackingModal').style.justifyContent = 'center';
         })
         .catch(error => console.error('Error fetching tracking data:', error));
 }
@@ -122,86 +143,57 @@ function generateProgressTimeline(currentStatus, tracking) {
 
     // Build progress path
     let pathStatuses = ['scheduled'];
-    if (completedStatuses.has('confirmed') || currentStatus === 'confirmed') {
+    if (completedStatuses.has('confirmed') || currentStatus === 'confirmed' || currentStatus === 'completed') {
         pathStatuses.push('confirmed');
     }
-    if (completedStatuses.has('completed') || currentStatus === 'completed') {
+    if (currentStatus === 'completed' || completedStatuses.has('completed')) {
         pathStatuses = ['scheduled', 'confirmed', 'completed'];
-    } else if (completedStatuses.has('cancelled') || currentStatus === 'cancelled') {
+    } else if (currentStatus === 'cancelled' || completedStatuses.has('cancelled')) {
         pathStatuses.push('cancelled');
-    } else if (completedStatuses.has('no_show') || currentStatus === 'no_show') {
+    } else if (currentStatus === 'no_show' || completedStatuses.has('no_show')) {
         pathStatuses.push('no_show');
     }
 
     const getStatusColor = (status) => {
         switch(status) {
-            case 'scheduled': return '#666666';
-            case 'confirmed': return '#0066CC';
+            case 'scheduled': return '#000000';
+            case 'confirmed': return '#000000';
             case 'completed': return '#00AA00';
             case 'cancelled': return '#CC0000';
             case 'no_show': return '#FF6600';
-            default: return '#999999';
-        }
-    };
-
-    const getStatusBackground = (status) => {
-        switch(status) {
-            case 'scheduled': return '#F0F0F0';
-            case 'confirmed': return '#E6F2FF';
-            case 'completed': return '#E6FFE6';
-            case 'cancelled': return '#FFE6E6';
-            case 'no_show': return '#FFF0E6';
-            default: return '#F5F5F5';
+            default: return '#CCCCCC';
         }
     };
 
     // Create visual progress
-    const progressHTML = `
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-            ${pathStatuses.map((status, index) => {
-                const isCompleted = true;
-                const isCurrent = status === currentStatus;
-                const statusColor = getStatusColor(status);
+    const progressHTML = pathStatuses.map((status, index) => {
+        const isCompleted = index < pathStatuses.indexOf(currentStatus === 'cancelled' || currentStatus === 'no_show' ? currentStatus : currentStatus) + 1 || currentStatus === status || (currentStatus !== 'cancelled' && currentStatus !== 'no_show' && ['scheduled', 'confirmed', 'completed'].includes(status) && STATUS_SEQUENCE.indexOf(status) <= STATUS_SEQUENCE.indexOf(currentStatus));
+        const statusColor = getStatusColor(status);
+        const isLast = index === pathStatuses.length - 1;
 
-                return `
-                    <div style="display:flex;align-items:center;flex:${index === pathStatuses.length - 1 ? '0' : '1'};">
-                        <div style="
-                            display:flex;
-                            flex-direction:column;
-                            align-items:center;
-                            gap:8px;
-                        ">
-                            <div style="
-                                width:48px;
-                                height:48px;
-                                border-radius:50%;
-                                background:${getStatusBackground(status)};
-                                border:2px solid ${statusColor};
-                                display:flex;
-                                align-items:center;
-                                justify-content:center;
-                                font-size:20px;
-                                font-weight:700;
-                                color:${statusColor};
-                            ">
-                                ${status === 'completed' ? '✓' : status === 'cancelled' ? '✕' : status === 'no_show' ? '–' : (index + 1)}
-                            </div>
-                            <p style="font-size:11px;font-weight:600;color:#000000;text-align:center;width:60px;">${STATUS_LABELS[status]}</p>
-                        </div>
-                        ${index < pathStatuses.length - 1 ? `
-                            <div style="
-                                flex:1;
-                                height:2px;
-                                background:${statusColor};
-                                margin:0 12px;
-                                min-width:20px;
-                            "></div>
-                        ` : ''}
-                    </div>
-                `;
-            }).join('')}
-        </div>
-    `;
+        return `
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;">
+                <div style="
+                    width:50px;
+                    height:50px;
+                    border-radius:50%;
+                    background:${isCompleted ? statusColor : '#F0F0F0'};
+                    border:2px solid ${statusColor};
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:20px;
+                    font-weight:700;
+                    color:${isCompleted ? '#FFFFFF' : '#CCCCCC'};
+                    margin-bottom:12px;
+                ">
+                    ${status === 'completed' ? '✓' : status === 'cancelled' ? '✕' : status === 'no_show' ? '–' : '📋'}
+                </div>
+                <p style="font-size:11px;font-weight:600;color:#000000;text-align:center;width:70px;line-height:1.3;">${STATUS_LABELS[status]}</p>
+                ${!isLast ? `<div style="flex:1;width:2px;background:${statusColor};margin-top:12px;position:relative;top:-30px;"></div>` : ''}
+            </div>
+        `;
+    }).join('');
 
     timeline.innerHTML = progressHTML;
 }

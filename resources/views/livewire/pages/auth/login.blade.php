@@ -121,21 +121,20 @@ new #[Layout('layouts.guest')] class extends Component
         </div>
 
         <!-- Remember Me -->
-        <div style="display: flex; align-items: center; margin-top: 16px;">
-            <input
-                wire:model="form.remember"
-                id="remember"
-                type="checkbox"
-                name="remember"
-                style="width: 16px; height: 16px; cursor: pointer; accent-color: #000000; border: 1.5px solid #D5D5D5; border-radius: 6px;"
-            />
-            <label for="remember" style="margin-left: 10px; font-size: 13px; color: #666666; cursor: pointer; user-select: none;">
-                {{ __('Remember me') }}
-            </label>
-        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 16px;">
+            <div style="display: flex; align-items: center;">
+                <input
+                    wire:model="form.remember"
+                    id="remember"
+                    type="checkbox"
+                    name="remember"
+                    style="width: 16px; height: 16px; cursor: pointer; accent-color: #000000; border: 1.5px solid #D5D5D5; border-radius: 6px;"
+                />
+                <label for="remember" style="margin-left: 10px; font-size: 13px; color: #666666; cursor: pointer; user-select: none;">
+                    {{ __('Remember me') }}
+                </label>
+            </div>
 
-        <!-- Actions -->
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 28px; padding-top: 20px; border-top: 1px solid #E5E5E5;">
             @if (Route::has('password.request'))
                 <a
                     href="{{ route('password.request') }}"
@@ -146,31 +145,25 @@ new #[Layout('layouts.guest')] class extends Component
                 >
                     {{ __('Forgot password?') }}
                 </a>
-            @else
-                <div></div>
             @endif
+        </div>
 
+        <!-- Actions -->
+        <div style="display: flex; align-items: center; margin-top: 28px; padding-top: 20px; border-top: 1px solid #E5E5E5;">
             <button
                 type="submit"
-                style="padding: 10px 28px; background: #000000; color: #FFFFFF; border: 2px solid #000000; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px;"
-                wire:loading.attr="disabled"
+                style="width: 100%; padding: 10px 28px; background: #000000; color: #FFFFFF; border: 2px solid #000000; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 0.05em;"
                 onmouseover="this.style.background='#2D2D2D'; this.style.borderColor='#2D2D2D'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'"
                 onmouseout="this.style.background='#000000'; this.style.borderColor='#000000'; this.style.boxShadow='none'"
             >
-                <span wire:loading.remove>
-                    <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                    </svg>
-                    {{ __('Sign In') }}
-                </span>
-                <span wire:loading style="display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255, 255, 255, 0.3); border-top-color: #FFFFFF; border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+                {{ __('Sign In') }}
             </button>
         </div>
     </form>
-</div>
 
-<style>
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-</style>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</div>
