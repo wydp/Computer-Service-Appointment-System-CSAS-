@@ -12,7 +12,7 @@
     <p class="page-sub">Update appointment details and status</p>
 </div>
 
-<div style="max-width:600px;">
+<div style="max-width:600px;margin:0 auto;">
     <div class="card p-7">
         <form method="POST" action="{{ route('appointments.update', $appointment) }}">
             @csrf @method('PUT')

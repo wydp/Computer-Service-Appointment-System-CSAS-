@@ -36,8 +36,8 @@
 
         <!-- Status Details -->
         <div style="padding:32px;background:#FFFFFF;flex:1;overflow-y:auto;">
-            <p style="font-size:12px;font-weight:600;color:#000000;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:24px;">Status Timeline</p>
-            <div id="trackingTimeline" style="max-height:100%;">
+            <p style="font-size:12px;font-weight:600;color:#000000;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:32px;text-align:center;">Status Timeline</p>
+            <div id="trackingTimeline" style="max-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;">
                 <!-- Will be populated by JavaScript -->
             </div>
         </div>
@@ -97,22 +97,50 @@ function openTrackingModal(appointmentId) {
                 </div>
             `;
 
-            // Populate history timeline
+            // Populate history timeline with status flow
             const timeline = document.getElementById('trackingTimeline');
-            timeline.innerHTML = data.tracking.map((item, index) => `
-                <div style="display:flex;gap:12px;margin-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};padding-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};border-bottom:${index === data.tracking.length - 1 ? 'none' : '1px solid #E5E5E5'}">
-                    <div style="display:flex;flex-direction:column;align-items:center;min-width:24px;">
-                        <div style="width:8px;height:8px;background:#000000;border-radius:50%;position:relative;z-index:2;"></div>
+
+            // Define status progression based on current status
+            const statusProgression = {
+                'scheduled': ['Scheduled'],
+                'confirmed': ['Scheduled', 'Confirmed'],
+                'completed': ['Scheduled', 'Confirmed', 'Completed'],
+                'cancelled': ['Scheduled', 'Cancelled'],
+                'no_show': ['Scheduled', 'No Show']
+            };
+
+            const statuses = statusProgression[data.appointment.status] || ['Scheduled'];
+
+            timeline.innerHTML = statuses.map((status, index) => {
+                const statusColors = {
+                    'Scheduled': '#666666',
+                    'Confirmed': '#000000',
+                    'Completed': '#00AA00',
+                    'Cancelled': '#CC0000',
+                    'No Show': '#FF6600'
+                };
+
+                return `
+                    <div style="
+                        padding: 16px 32px;
+                        background: #F8F9FA;
+                        border-left: 4px solid ${statusColors[status]};
+                        border-radius: 4px;
+                        text-align: center;
+                        min-width: 200px;
+                    ">
+                        <p style="
+                            font-size: 18px;
+                            font-weight: 600;
+                            color: ${statusColors[status]};
+                            margin: 0;
+                        ">
+                            ${status}
+                        </p>
                     </div>
-                    <div style="flex:1;">
-                        <p style="font-size:13px;font-weight:600;color:#000000;margin-bottom:4px;">${item.status_change}</p>
-                        <p style="font-size:12px;color:#999999;margin-bottom:4px;">By ${item.changed_by}</p>
-                        ${item.service_completed_by ? `<p style="font-size:12px;color:#999999;margin-bottom:4px;">Service by ${item.service_completed_by}</p>` : ''}
-                        <p style="font-size:12px;color:#999999;">${item.timestamp}</p>
-                        ${item.notes ? `<p style="font-size:12px;color:#666666;margin-top:8px;font-style:italic;">&quot;${item.notes}&quot;</p>` : ''}
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+
 
             document.getElementById('trackingModal').style.display = 'flex';
             document.getElementById('trackingModal').style.alignItems = 'flex-start';

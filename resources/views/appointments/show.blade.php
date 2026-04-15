@@ -25,7 +25,7 @@
 </div>
 
 {{-- Details Card --}}
-<div class="card p-7 mb-6" style="max-width:780px;">
+<div class="card p-7 mb-6" style="max-width:780px;margin-left:auto;margin-right:auto;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
         <div>
             <p style="font-size:11px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
