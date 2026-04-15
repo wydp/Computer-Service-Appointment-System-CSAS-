@@ -134,66 +134,109 @@ function openTrackingModal(appointmentId) {
 function generateProgressTimeline(currentStatus, tracking) {
     const timeline = document.getElementById('progressTimeline');
 
-    // Determine the path taken
-    const completedStatuses = new Set();
-    tracking.forEach(item => {
-        if (item.from_status) completedStatuses.add(item.from_status);
-        completedStatuses.add(item.to_status);
-    });
-
-    // Build progress path
-    let pathStatuses = ['scheduled'];
-    if (completedStatuses.has('confirmed') || currentStatus === 'confirmed' || currentStatus === 'completed') {
-        pathStatuses.push('confirmed');
-    }
-    if (currentStatus === 'completed' || completedStatuses.has('completed')) {
-        pathStatuses = ['scheduled', 'confirmed', 'completed'];
-    } else if (currentStatus === 'cancelled' || completedStatuses.has('cancelled')) {
-        pathStatuses.push('cancelled');
-    } else if (currentStatus === 'no_show' || completedStatuses.has('no_show')) {
-        pathStatuses.push('no_show');
-    }
-
-    const getStatusColor = (status) => {
-        switch(status) {
-            case 'scheduled': return '#000000';
-            case 'confirmed': return '#000000';
-            case 'completed': return '#00AA00';
-            case 'cancelled': return '#CC0000';
-            case 'no_show': return '#FF6600';
-            default: return '#CCCCCC';
-        }
+    // Define all possible paths
+    const paths = {
+        completed: ['scheduled', 'confirmed', 'completed'],
+        confirmed: ['scheduled', 'confirmed'],
+        cancelled: ['scheduled', 'cancelled'],
+        no_show: ['scheduled', 'no_show'],
+        scheduled: ['scheduled']
     };
 
-    // Create visual progress
-    const progressHTML = pathStatuses.map((status, index) => {
-        const isCompleted = index < pathStatuses.indexOf(currentStatus === 'cancelled' || currentStatus === 'no_show' ? currentStatus : currentStatus) + 1 || currentStatus === status || (currentStatus !== 'cancelled' && currentStatus !== 'no_show' && ['scheduled', 'confirmed', 'completed'].includes(status) && STATUS_SEQUENCE.indexOf(status) <= STATUS_SEQUENCE.indexOf(currentStatus));
-        const statusColor = getStatusColor(status);
-        const isLast = index === pathStatuses.length - 1;
+    // Get the path for current status
+    const path = paths[currentStatus] || paths.scheduled;
 
-        return `
-            <div style="display:flex;flex-direction:column;align-items:center;flex:1;">
+    // Calculate progress percentage
+    const progressPercent = (path.indexOf(currentStatus) + 1) / path.length * 100;
+
+    // Create progress bar HTML
+    const progressHTML = `
+        <div style="width: 100%; position: relative;">
+            <!-- Background track -->
+            <div style="
+                position: relative;
+                height: 8px;
+                background: #E5E5E5;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                overflow: hidden;
+            ">
+                <!-- Progress fill -->
                 <div style="
-                    width:50px;
-                    height:50px;
-                    border-radius:50%;
-                    background:${isCompleted ? statusColor : '#F0F0F0'};
-                    border:2px solid ${statusColor};
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:20px;
-                    font-weight:700;
-                    color:${isCompleted ? '#FFFFFF' : '#CCCCCC'};
-                    margin-bottom:12px;
-                ">
-                    ${status === 'completed' ? '✓' : status === 'cancelled' ? '✕' : status === 'no_show' ? '–' : '📋'}
-                </div>
-                <p style="font-size:11px;font-weight:600;color:#000000;text-align:center;width:70px;line-height:1.3;">${STATUS_LABELS[status]}</p>
-                ${!isLast ? `<div style="flex:1;width:2px;background:${statusColor};margin-top:12px;position:relative;top:-30px;"></div>` : ''}
+                    height: 100%;
+                    background: linear-gradient(90deg, #000000, #2D2D2D);
+                    border-radius: 10px;
+                    width: ${progressPercent}%;
+                    transition: width 0.5s ease-out;
+                "></div>
             </div>
-        `;
-    }).join('');
+
+            <!-- Status checkpoints -->
+            <div style="display: flex; justify-content: space-between; position: relative; top: -25px;">
+                ${path.map((status, index) => {
+                    const isCompleted = path.indexOf(currentStatus) >= index;
+                    const statusLabels = {
+                        'scheduled': 'Scheduled',
+                        'confirmed': 'Confirmed',
+                        'completed': 'Completed',
+                        'cancelled': 'Cancelled',
+                        'no_show': 'No Show'
+                    };
+                    const statusIcons = {
+                        'scheduled': '📋',
+                        'confirmed': '✓',
+                        'completed': '✓',
+                        'cancelled': '✕',
+                        'no_show': '–'
+                    };
+                    const statusColors = {
+                        'scheduled': '#666666',
+                        'confirmed': '#000000',
+                        'completed': '#00AA00',
+                        'cancelled': '#CC0000',
+                        'no_show': '#FF6600'
+                    };
+
+                    return `
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <div style="
+                                width: 40px;
+                                height: 40px;
+                                border-radius: 50%;
+                                background: ${isCompleted ? statusColors[status] : '#FFFFFF'};
+                                border: 3px solid ${statusColors[status]};
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 18px;
+                                font-weight: 700;
+                                color: ${isCompleted ? '#FFFFFF' : '#CCCCCC'};
+                                margin-bottom: 12px;
+                                box-shadow: ${isCompleted ? '0 2px 8px rgba(0,0,0,0.15)' : 'none'};
+                            ">
+                                ${statusIcons[status]}
+                            </div>
+                            <p style="
+                                font-size: 12px;
+                                font-weight: 600;
+                                color: ${isCompleted ? statusColors[status] : '#CCCCCC'};
+                                text-align: center;
+                                width: 100%;
+                                margin: 0;
+                            ">
+                                ${statusLabels[status]}
+                            </p>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+
+        <!-- Progress percentage display -->
+        <div style="text-align: center; margin-top: 40px; font-size: 14px; font-weight: 600; color: #666666;">
+            Progress: <span style="color: #000000; font-size: 16px;">${Math.round(progressPercent)}%</span>
+        </div>
+    `;
 
     timeline.innerHTML = progressHTML;
 }
