@@ -6,7 +6,41 @@
     <p class="page-sub">Complete history of all completed services</p>
 </div>
 
-<div class="card overflow-hidden">
+{{-- Filter Form --}}
+<div class="card p-6 mb-8">
+    <h3 style="font-size:14px;font-weight:600;color:#1A1A1A;margin-bottom:16px;">Filters</h3>
+    <form method="GET" action="{{ route('service-records.index') }}" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;align-items:flex-end;">
+        <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Client Name</label>
+            <input type="text" name="client" value="{{ request('client') }}" class="input" placeholder="Search by name" style="width:100%;">
+        </div>
+
+        <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Service Type</label>
+            <input type="text" name="service_type" value="{{ request('service_type') }}" class="input" placeholder="e.g., Laptop Repair" style="width:100%;">
+        </div>
+
+        <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Date From</label>
+            <input type="date" name="date_from" value="{{ request('date_from') }}" class="input" style="width:100%;">
+        </div>
+
+        <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Date To</label>
+            <input type="date" name="date_to" value="{{ request('date_to') }}" class="input" style="width:100%;">
+        </div>
+
+        <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Remarks</label>
+            <input type="text" name="remarks" value="{{ request('remarks') }}" class="input" placeholder="Search remarks" style="width:100%;">
+        </div>
+
+        <div style="display:flex;gap:8px;">
+            <button type="submit" class="btn-primary px-4 py-2 text-sm font-medium" style="flex:1;">Apply Filters</button>
+            <a href="{{ route('service-records.index') }}" class="btn-secondary px-4 py-2 text-sm font-medium">Clear</a>
+        </div>
+    </form>
+</div>
     <table>
         <thead>
             <tr>

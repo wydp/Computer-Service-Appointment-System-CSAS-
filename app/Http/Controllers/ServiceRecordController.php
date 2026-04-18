@@ -9,11 +9,45 @@ use Illuminate\Http\Request;
 class ServiceRecordController extends Controller
 {
     // Show all service records
-    public function index()
+    public function index(Request $request)
     {
-        $records = ServiceRecord::with(['client', 'staff', 'appointment'])
-            ->latest()
-            ->paginate(10);
+        $query = ServiceRecord::with(['client', 'staff', 'appointment'])->latest();
+
+        // Filter by client name
+        if ($request->has('client') && !empty($request->client)) {
+            $query->whereHas('client', function ($q) use ($request) {
+                $q->where('first_name', 'like', '%' . $request->client . '%')
+                  ->orWhere('last_name', 'like', '%' . $request->client . '%');
+            });
+        }
+
+        // Filter by service type
+        if ($request->has('service_type') && !empty($request->service_type)) {
+            $query->whereHas('appointment', function ($q) use ($request) {
+                $q->where('service_type', $request->service_type);
+            });
+        }
+
+        // Filter by staff
+        if ($request->has('staff_id') && !empty($request->staff_id)) {
+            $query->where('staff_id', $request->staff_id);
+        }
+
+        // Filter by date range
+        if ($request->has('date_from') && !empty($request->date_from)) {
+            $query->whereDate('service_date', '>=', $request->date_from);
+        }
+
+        if ($request->has('date_to') && !empty($request->date_to)) {
+            $query->whereDate('service_date', '<=', $request->date_to);
+        }
+
+        // Filter by remarks
+        if ($request->has('remarks') && !empty($request->remarks)) {
+            $query->where('remarks', 'like', '%' . $request->remarks . '%');
+        }
+
+        $records = $query->paginate(10);
         return view('service-records.index', compact('records'));
     }
 

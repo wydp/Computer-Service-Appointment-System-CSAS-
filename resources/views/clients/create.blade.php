@@ -10,13 +10,13 @@
     </a>
 </div>
 
-<div style="max-width:600px;">
+<div style="max-width:1000px;margin:0 auto;">
     <div class="card p-7">
         <h2 style="font-size:18px;font-weight:700;color:#1A1A1A;margin-bottom:28px;">Add New Client</h2>
         <form method="POST" action="{{ route('clients.store') }}">
             @csrf
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:20px;">
                 <div>
                     <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">First Name *</label>
                     <input type="text" name="first_name" value="{{ old('first_name') }}" class="input" placeholder="John">
@@ -27,12 +27,11 @@
                     <input type="text" name="last_name" value="{{ old('last_name') }}" class="input" placeholder="Doe">
                     @error('last_name')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
                 </div>
-            </div>
-
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Phone Number *</label>
-                <input type="text" name="phone" value="{{ old('phone') }}" class="input" placeholder="+1 (555) 000-0000">
-                @error('phone')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Phone Number *</label>
+                    <input type="text" name="phone" value="{{ old('phone') }}" class="input" placeholder="+1 (555) 000-0000">
+                    @error('phone')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                </div>
             </div>
 
             <div style="margin-bottom:20px;">
@@ -44,6 +43,7 @@
             <div style="margin-bottom:20px;">
                 <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Address</label>
                 <textarea name="address" rows="2" class="input" placeholder="123 Main St, City, State 12345">{{ old('address') }}</textarea>
+                @error('address')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
             </div>
 
             <div style="margin-bottom:28px;">

@@ -8,65 +8,77 @@
 
 {{-- Stats Grid --}}
 <div class="grid grid-cols-4 gap-6 mb-8">
-    <div class="card p-6 hover:shadow-md transition-shadow duration-150">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
-            <div>
-                <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Total Clients</p>
-                <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $totalClients }}</p>
-                <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">Registered customers</p>
-            </div>
-            <div style="width:44px;height:44px;background:#F5F6F7;border:1px solid #ECECEC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg style="width:20px;height:20px;color:#525252;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
+    <!-- Total Clients Card -->
+    <a href="{{ route('clients.index') }}" style="text-decoration:none;cursor:pointer;">
+        <div class="card p-6 hover:shadow-md transition-shadow duration-150" style="cursor:pointer;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+                <div>
+                    <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Total Clients</p>
+                    <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $totalClients }}</p>
+                    <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">Registered customers</p>
+                </div>
+                <div style="width:44px;height:44px;background:#F5F6F7;border:1px solid #ECECEC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg style="width:20px;height:20px;color:#525252;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 
-    <div class="card p-6 hover:shadow-md transition-shadow duration-150">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
-            <div>
-                <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Today</p>
-                <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $todayAppointments }}</p>
-                <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">Scheduled appointments</p>
-            </div>
-            <div style="width:44px;height:44px;background:#F5F6F7;border:1px solid #ECECEC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg style="width:20px;height:20px;color:#525252;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
+    <!-- Today (Scheduled) Card -->
+    <a href="{{ route('appointments.index', ['status' => 'scheduled']) }}" style="text-decoration:none;cursor:pointer;">
+        <div class="card p-6 hover:shadow-md transition-shadow duration-150" style="cursor:pointer;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+                <div>
+                    <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Today</p>
+                    <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $todayAppointments }}</p>
+                    <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">Scheduled appointments</p>
+                </div>
+                <div style="width:44px;height:44px;background:#F5F6F7;border:1px solid #ECECEC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg style="width:20px;height:20px;color:#525252;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 
-    <div class="card p-6 hover:shadow-md transition-shadow duration-150">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
-            <div>
-                <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Completed</p>
-                <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $completedAppointments }}</p>
-                <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">All time</p>
-            </div>
-            <div style="width:44px;height:44px;background:#F0FDF4;border:1px solid #BBFB7D;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg style="width:20px;height:20px;color:#15803d;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+    <!-- Completed Card -->
+    <a href="{{ route('appointments.index', ['status' => 'completed']) }}" style="text-decoration:none;cursor:pointer;">
+        <div class="card p-6 hover:shadow-md transition-shadow duration-150" style="cursor:pointer;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+                <div>
+                    <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Completed</p>
+                    <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $completedAppointments }}</p>
+                    <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">All time</p>
+                </div>
+                <div style="width:44px;height:44px;background:#F0FDF4;border:1px solid #BBFB7D;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg style="width:20px;height:20px;color:#15803d;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 
-    <div class="card p-6 hover:shadow-md transition-shadow duration-150">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;">
-            <div>
-                <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Cancelled</p>
-                <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $cancelledAppointments }}</p>
-                <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">All time</p>
-            </div>
-            <div style="width:44px;height:44px;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg style="width:20px;height:20px;color:#DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 14l-2-2m0 0l-2-2m2 2l2-2m-2 2l-2 2"/>
-                </svg>
+    <!-- Cancelled Card -->
+    <a href="{{ route('appointments.index', ['status' => 'cancelled']) }}" style="text-decoration:none;cursor:pointer;">
+        <div class="card p-6 hover:shadow-md transition-shadow duration-150" style="cursor:pointer;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+                <div>
+                    <p style="font-size:12px;font-weight:600;color:#8A8A8A;text-transform:uppercase;letter-spacing:0.05em;">Cancelled</p>
+                    <p style="font-size:32px;font-weight:700;color:#1A1A1A;margin-top:12px;">{{ $cancelledAppointments }}</p>
+                    <p style="font-size:13px;color:#8A8A8A;margin-top:6px;">All time</p>
+                </div>
+                <div style="width:44px;height:44px;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg style="width:20px;height:20px;color:#DC2626;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 14l-2-2m0 0l-2-2m2 2l2-2m-2 2l-2 2"/>
+                    </svg>
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>
 
 {{-- Charts Grid --}}
@@ -77,40 +89,6 @@
 
 {{-- Quick Actions --}}
 <div class="grid grid-cols-2 gap-6 mb-8">
-    <a href="{{ route('clients.index') }}" style="text-decoration:none;">
-        <div class="card p-6 cursor-pointer hover:shadow-lg hover:border-[#8A8A8A] transition-all duration-200">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-                <div>
-                    <p style="font-size:14px;font-weight:600;color:#1A1A1A;">Manage Clients</p>
-                    <p style="font-size:13px;color:#8A8A8A;margin-top:4px;">View and manage customer records</p>
-                </div>
-                <div style="width:48px;height:48px;background:#F5F6F7;border:1px solid #ECECEC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg style="width:22px;height:22px;color:#525252;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </a>
-
-    <a href="{{ route('appointments.index') }}" style="text-decoration:none;">
-        <div class="card p-6 cursor-pointer hover:shadow-lg hover:border-[#8A8A8A] transition-all duration-200">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-                <div>
-                    <p style="font-size:14px;font-weight:600;color:#1A1A1A;">Manage Appointments</p>
-                    <p style="font-size:13px;color:#8A8A8A;margin-top:4px;">Schedule and track bookings</p>
-                </div>
-                <div style="width:48px;height:48px;background:#F5F6F7;border:1px solid #ECECEC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg style="width:22px;height:22px;color:#525252;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </a>
-</div>
-
-{{-- Activity Sections --}}
 <div class="grid grid-cols-3 gap-6">
     {{-- Upcoming Appointments --}}
     <div class="card overflow-hidden">

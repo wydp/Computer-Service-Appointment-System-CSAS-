@@ -11,11 +11,16 @@ use Illuminate\Http\Request;
 class AppointmentController extends Controller
 {
     // Show all appointments
-    public function index()
+    public function index(Request $request)
     {
-        $appointments = Appointment::with(['client', 'staff'])
-            ->latest()
-            ->paginate(10);
+        $query = Appointment::with(['client', 'staff'])->latest();
+
+        // Filter by status if provided
+        if ($request->has('status') && in_array($request->status, ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'])) {
+            $query->where('status', $request->status);
+        }
+
+        $appointments = $query->paginate(10);
         return view('appointments.index', compact('appointments'));
     }
 

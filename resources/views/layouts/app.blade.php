@@ -374,7 +374,7 @@
                         {{ auth()->user()->role }}
                     </p>
                 </div>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Are you sure you want to sign out?')">
                     @csrf
                     <button type="submit" title="Logout" class="p-1.5 hover:bg-white/10 rounded-md transition" style="background:none;border:none;">
                         <svg style="width:16px;height:16px;color:#A0AEC0;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">

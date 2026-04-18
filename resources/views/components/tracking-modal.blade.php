@@ -12,7 +12,7 @@
 
         <!-- Appointment Info -->
         <div id="appointmentInfo" style="padding:24px;border-bottom:1px solid #E5E5E5;background:#FFFFFF;">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:20px;">
                 <div>
                     <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
                     <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
@@ -21,8 +21,6 @@
                     <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Service</p>
                     <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
                 </div>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
                 <div>
                     <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Date</p>
                     <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">—</p>
@@ -36,8 +34,25 @@
 
         <!-- Status Details -->
         <div style="padding:32px;background:#FFFFFF;flex:1;overflow-y:auto;">
-            <p style="font-size:12px;font-weight:600;color:#000000;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:32px;text-align:center;">Status Timeline</p>
-            <div id="trackingTimeline" style="max-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;">
+            <!-- Progress Bar -->
+            <div id="progressBarContainer" style="margin-bottom:32px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                    <p style="font-size:12px;font-weight:600;color:#000000;text-transform:uppercase;letter-spacing:0.05em;">Progress</p>
+                    <p id="progressPercentage" style="font-size:12px;font-weight:600;color:#666666;">0%</p>
+                </div>
+                <div style="width:100%;height:8px;background:#E5E5E5;border-radius:4px;overflow:hidden;position:relative;">
+                    <div id="progressBar" style="height:100%;background:#666666;border-radius:4px;width:0%;transition:all 0.3s ease;"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:11px;color:#999999;">
+                    <span>Scheduled</span>
+                    <span>Confirmed</span>
+                    <span>Completed</span>
+                </div>
+            </div>
+
+            <!-- Status Timeline -->
+            <p style="font-size:12px;font-weight:600;color:#000000;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:32px;text-align:center;">Status Details</p>
+            <div id="trackingTimeline" style="max-height:100%;display:flex;flex-direction:column;align-items:flex-start;gap:16px;width:100%;">
                 <!-- Will be populated by JavaScript -->
             </div>
         </div>
@@ -52,7 +67,7 @@
 <script>
 const STATUS_SEQUENCE = ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'];
 const STATUS_LABELS = {
-    'scheduled': 'Order Placed',
+    'scheduled': 'Scheduled',
     'confirmed': 'Confirmed',
     'completed': 'Completed',
     'cancelled': 'Cancelled',
@@ -67,15 +82,26 @@ const STATUS_ICONS = {
     'no_show': '–'
 };
 
+function getProgressBar(status) {
+    const progressMap = {
+        'scheduled': { percent: 25, color: '#666666' },
+        'confirmed': { percent: 50, color: '#000000' },
+        'completed': { percent: 100, color: '#00AA00' },
+        'cancelled': { percent: 100, color: '#CC0000' },
+        'no_show': { percent: 100, color: '#FF6600' }
+    };
+    return progressMap[status] || { percent: 0, color: '#666666' };
+}
+
 function openTrackingModal(appointmentId) {
     fetch(`/api/appointments/${appointmentId}/tracking`)
         .then(response => response.json())
         .then(data => {
-            // Populate appointment info
+            // Populate appointment info - 1 row with 4 columns
             const appointmentInfo = document.getElementById('appointmentInfo');
             const dateTime = data.appointment.date_time.split(' at ');
             appointmentInfo.innerHTML = `
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
+                <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:20px;">
                     <div>
                         <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Client</p>
                         <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${data.appointment.client_name}</p>
@@ -84,8 +110,6 @@ function openTrackingModal(appointmentId) {
                         <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Service</p>
                         <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${data.appointment.service_type}</p>
                     </div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
                     <div>
                         <p style="font-size:11px;font-weight:600;color:#999999;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Date</p>
                         <p style="font-size:14px;font-weight:600;color:#000000;margin:0;">${dateTime[0]}</p>
@@ -97,54 +121,18 @@ function openTrackingModal(appointmentId) {
                 </div>
             `;
 
-            // Populate history timeline with status flow and detailed history
+            // Update progress bar
+            const progress = getProgressBar(data.appointment.status);
+            document.getElementById('progressBar').style.width = progress.percent + '%';
+            document.getElementById('progressBar').style.backgroundColor = progress.color;
+            document.getElementById('progressPercentage').textContent = progress.percent + '%';
+
+            // Populate history timeline
             const timeline = document.getElementById('trackingTimeline');
-
-            // Define status progression based on current status
-            const statusProgression = {
-                'scheduled': ['Scheduled'],
-                'confirmed': ['Scheduled', 'Confirmed'],
-                'completed': ['Scheduled', 'Confirmed', 'Completed'],
-                'cancelled': ['Scheduled', 'Cancelled'],
-                'no_show': ['Scheduled', 'No Show']
-            };
-
-            const statuses = statusProgression[data.appointment.status] || ['Scheduled'];
-
-            // Display status progression
-            const statusFlowHTML = statuses.map((status) => {
-                const statusColors = {
-                    'Scheduled': '#666666',
-                    'Confirmed': '#000000',
-                    'Completed': '#00AA00',
-                    'Cancelled': '#CC0000',
-                    'No Show': '#FF6600'
-                };
-
-                return `
-                    <div style="
-                        padding: 16px 32px;
-                        background: #F8F9FA;
-                        border-left: 4px solid ${statusColors[status]};
-                        border-radius: 4px;
-                        text-align: center;
-                        min-width: 200px;
-                    ">
-                        <p style="
-                            font-size: 18px;
-                            font-weight: 600;
-                            color: ${statusColors[status]};
-                            margin: 0;
-                        ">
-                            ${status}
-                        </p>
-                    </div>
-                `;
-            }).join('');
 
             // Display detailed history
             const detailedHistoryHTML = data.tracking.map((item, index) => `
-                <div style="display:flex;gap:12px;margin-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};padding-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};border-bottom:${index === data.tracking.length - 1 ? 'none' : '1px solid #E5E5E5'}">
+                <div style="display:flex;gap:12px;width:100%;padding-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};border-bottom:${index === data.tracking.length - 1 ? 'none' : '1px solid #E5E5E5'}">
                     <div style="display:flex;flex-direction:column;align-items:center;min-width:24px;">
                         <div style="width:8px;height:8px;background:#000000;border-radius:50%;position:relative;z-index:2;"></div>
                     </div>
@@ -158,8 +146,7 @@ function openTrackingModal(appointmentId) {
                 </div>
             `).join('');
 
-            timeline.innerHTML = statusFlowHTML + '<div style="margin-top:32px;padding-top:32px;border-top:2px solid #E5E5E5;">' + detailedHistoryHTML + '</div>';
-
+            timeline.innerHTML = detailedHistoryHTML;
 
             document.getElementById('trackingModal').style.display = 'flex';
             document.getElementById('trackingModal').style.alignItems = 'flex-start';
