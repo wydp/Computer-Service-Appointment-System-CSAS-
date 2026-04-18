@@ -43,52 +43,44 @@
                 </div>
             </div>
 
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Assign Staff *</label>
-                <select name="staff_id" class="input">
-                    @foreach($staff as $member)
-                    <option value="{{ $member->id }}" {{ old('staff_id',$appointment->staff_id)==$member->id?'selected':'' }}>
-                        {{ $member->name }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('staff_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
-            </div>
-
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Service Type *</label>
-                <input type="text" name="service_type" value="{{ old('service_type',$appointment->service_type) }}" class="input">
-                @error('service_type')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
-            </div>
-
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
                 <div>
-                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Date *</label>
-                    <input type="date" name="appointment_date" value="{{ old('appointment_date',$appointment->appointment_date) }}" class="input">
-                    @error('appointment_date')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Service Type *</label>
+                    <input type="text" name="service_type" value="{{ old('service_type',$appointment->service_type) }}" class="input" style="width:100%;">
+                    @error('service_type')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
                 </div>
+
                 <div>
-                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Time *</label>
-                    <input type="time" name="appointment_time" value="{{ old('appointment_time', \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')) }}" class="input">
-                    @error('appointment_time')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Status *</label>
+                    @error('status')<p style="color:#DC2626;font-size:12px;margin-bottom:6px;">{{ $message }}</p>@enderror
+                    <input type="hidden" id="statusInput" name="status" value="{{ old('status', $appointment->status) }}">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button type="button" onclick="setStatus('scheduled', this)" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;{{ old('status', $appointment->status) === 'scheduled' ? 'background:#1A1A1A;color:#FFFFFF;' : 'background:#F5F5F5;color:#525252;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Scheduled</button>
+                        <button type="button" onclick="setStatus('confirmed', this)" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;{{ old('status', $appointment->status) === 'confirmed' ? 'background:#1A1A1A;color:#FFFFFF;' : 'background:#F5F5F5;color:#525252;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Confirmed</button>
+                        <button type="button" onclick="setStatus('completed', this)" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;{{ old('status', $appointment->status) === 'completed' ? 'background:#00AA00;color:#FFFFFF;' : 'background:#F0FDF4;color:#15803d;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Completed</button>
+                        <button type="button" onclick="setStatus('cancelled', this)" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;{{ old('status', $appointment->status) === 'cancelled' ? 'background:#DC2626;color:#FFFFFF;' : 'background:#FEF2F2;color:#DC2626;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Cancelled</button>
+                        <button type="button" onclick="setStatus('no_show', this)" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all 0.2s;{{ old('status', $appointment->status) === 'no_show' ? 'background:#FF6600;color:#FFFFFF;' : 'background:#FEF3F2;color:#FF6600;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">No Show</button>
+                    </div>
                 </div>
             </div>
 
             <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Status *</label>
-                <select name="status" class="input">
-                    <option value="scheduled" {{ old('status',$appointment->status)=='scheduled'?'selected':'' }}>Scheduled</option>
-                    <option value="confirmed" {{ old('status',$appointment->status)=='confirmed'?'selected':'' }}>Confirmed</option>
-                    <option value="completed" {{ old('status',$appointment->status)=='completed'?'selected':'' }}>Completed</option>
-                    <option value="cancelled" {{ old('status',$appointment->status)=='cancelled'?'selected':'' }}>Cancelled</option>
-                    <option value="no_show"   {{ old('status',$appointment->status)=='no_show'  ?'selected':'' }}>No Show</option>
-                </select>
-                @error('status')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Date & Time *</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div>
+                        <input type="date" name="appointment_date" value="{{ old('appointment_date',$appointment->appointment_date) }}" class="input" style="width:100%;">
+                        @error('appointment_date')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    </div>
+                    <div>
+                        <input type="time" name="appointment_time" value="{{ old('appointment_time', \Carbon\Carbon::parse($appointment->appointment_time)->format('H:i')) }}" class="input" style="width:100%;">
+                        @error('appointment_time')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    </div>
+                </div>
             </div>
 
             <div style="margin-bottom:28px;">
                 <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Notes</label>
-                <textarea name="notes" rows="3" class="input">{{ old('notes',$appointment->notes) }}</textarea>
+                <textarea name="notes" rows="2" class="input" style="width:100%;">{{ old('notes',$appointment->notes) }}</textarea>
             </div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid #ECECEC;">
@@ -105,5 +97,34 @@
         </form>
     </div>
 </div>
+
+<script>
+    function setStatus(status, button) {
+        event.preventDefault();
+        document.getElementById('statusInput').value = status;
+
+        // Remove active state from all buttons
+        const allButtons = button.parentElement.querySelectorAll('button');
+        allButtons.forEach(btn => {
+            btn.style.background = '#F5F5F5';
+            btn.style.color = '#525252';
+        });
+
+        // Add active state to clicked button
+        if (status === 'completed') {
+            button.style.background = '#00AA00';
+            button.style.color = '#FFFFFF';
+        } else if (status === 'cancelled') {
+            button.style.background = '#DC2626';
+            button.style.color = '#FFFFFF';
+        } else if (status === 'no_show') {
+            button.style.background = '#FF6600';
+            button.style.color = '#FFFFFF';
+        } else {
+            button.style.background = '#1A1A1A';
+            button.style.color = '#FFFFFF';
+        }
+    }
+</script>
 
 </x-app-layout>
