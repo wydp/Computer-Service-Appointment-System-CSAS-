@@ -9,6 +9,18 @@
     <a href="{{ route('appointments.create') }}" class="btn-primary px-4 py-2.5 text-sm font-medium">+ New Appointment</a>
 </div>
 
+{{-- Status Filter --}}
+<div class="card p-4 mb-6">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;font-weight:600;color:#1A1A1A;text-transform:uppercase;letter-spacing:0.05em;margin-right:8px;">Filter:</span>
+        <a href="{{ route('appointments.index') }}" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;{{ !request('status') ? 'background:#1A1A1A;color:#FFFFFF;' : 'background:#F5F5F5;color:#525252;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">All</a>
+        <a href="{{ route('appointments.index', ['status' => 'scheduled']) }}" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;{{ request('status') === 'scheduled' ? 'background:#1A1A1A;color:#FFFFFF;' : 'background:#F5F5F5;color:#525252;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Scheduled</a>
+        <a href="{{ route('appointments.index', ['status' => 'confirmed']) }}" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;{{ request('status') === 'confirmed' ? 'background:#1A1A1A;color:#FFFFFF;' : 'background:#F5F5F5;color:#525252;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Confirmed</a>
+        <a href="{{ route('appointments.index', ['status' => 'completed']) }}" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;{{ request('status') === 'completed' ? 'background:#00AA00;color:#FFFFFF;' : 'background:#F0FDF4;color:#15803d;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Completed</a>
+        <a href="{{ route('appointments.index', ['status' => 'cancelled']) }}" style="padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;{{ request('status') === 'cancelled' ? 'background:#DC2626;color:#FFFFFF;' : 'background:#FEF2F2;color:#DC2626;' }}" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Cancelled</a>
+    </div>
+</div>
+
 <div class="card overflow-hidden">
     <table>
         <thead>
