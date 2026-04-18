@@ -97,7 +97,7 @@ function openTrackingModal(appointmentId) {
                 </div>
             `;
 
-            // Populate history timeline with status flow
+            // Populate history timeline with status flow and detailed history
             const timeline = document.getElementById('trackingTimeline');
 
             // Define status progression based on current status
@@ -111,7 +111,8 @@ function openTrackingModal(appointmentId) {
 
             const statuses = statusProgression[data.appointment.status] || ['Scheduled'];
 
-            timeline.innerHTML = statuses.map((status, index) => {
+            // Display status progression
+            const statusFlowHTML = statuses.map((status) => {
                 const statusColors = {
                     'Scheduled': '#666666',
                     'Confirmed': '#000000',
@@ -140,6 +141,24 @@ function openTrackingModal(appointmentId) {
                     </div>
                 `;
             }).join('');
+
+            // Display detailed history
+            const detailedHistoryHTML = data.tracking.map((item, index) => `
+                <div style="display:flex;gap:12px;margin-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};padding-bottom:${index === data.tracking.length - 1 ? '0' : '16px'};border-bottom:${index === data.tracking.length - 1 ? 'none' : '1px solid #E5E5E5'}">
+                    <div style="display:flex;flex-direction:column;align-items:center;min-width:24px;">
+                        <div style="width:8px;height:8px;background:#000000;border-radius:50%;position:relative;z-index:2;"></div>
+                    </div>
+                    <div style="flex:1;">
+                        <p style="font-size:13px;font-weight:600;color:#000000;margin-bottom:4px;">${item.status_change}</p>
+                        <p style="font-size:12px;color:#999999;margin-bottom:4px;">By ${item.changed_by}</p>
+                        ${item.service_completed_by ? `<p style="font-size:12px;color:#999999;margin-bottom:4px;">Service by ${item.service_completed_by}</p>` : ''}
+                        <p style="font-size:12px;color:#999999;">${item.timestamp}</p>
+                        ${item.notes ? `<p style="font-size:12px;color:#666666;margin-top:8px;font-style:italic;">&quot;${item.notes}&quot;</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            timeline.innerHTML = statusFlowHTML + '<div style="margin-top:32px;padding-top:32px;border-top:2px solid #E5E5E5;">' + detailedHistoryHTML + '</div>';
 
 
             document.getElementById('trackingModal').style.display = 'flex';
