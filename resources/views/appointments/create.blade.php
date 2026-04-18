@@ -12,67 +12,71 @@
     <p class="page-sub">Fill in the details to book a service</p>
 </div>
 
-<div style="max-width:600px;margin:0 auto;">
+<div style="max-width:1000px;margin:0 auto;">
     <div class="card p-7">
         <form method="POST" action="{{ route('appointments.store') }}">
             @csrf
 
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Select Client *</label>
-                <select name="client_id" class="input">
-                    <option value="">— Choose a client —</option>
-                    @foreach($clients as $client)
-                    <option value="{{ $client->id }}" {{ old('client_id')==$client->id?'selected':'' }}>
-                        {{ $client->full_name }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('client_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
-            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Select Client *</label>
+                    <select name="client_id" class="input" style="width:100%;">
+                        <option value="">— Choose a client —</option>
+                        @foreach($clients as $client)
+                        <option value="{{ $client->id }}" {{ old('client_id')==$client->id?'selected':'' }}>
+                            {{ $client->full_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @error('client_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                </div>
 
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Assign Staff *</label>
-                <select name="staff_id" class="input">
-                    <option value="">— Select staff member —</option>
-                    @foreach($staff as $member)
-                    <option value="{{ $member->id }}" {{ old('staff_id')==$member->id?'selected':'' }}>
-                        {{ $member->name }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('staff_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
-            </div>
-
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Service Type *</label>
-                <input type="text" name="service_type" value="{{ old('service_type') }}"
-                       placeholder="e.g. PC Repair, Virus Removal, Hardware Upgrade" class="input">
-                @error('service_type')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Assign Staff *</label>
+                    <select name="staff_id" class="input" style="width:100%;">
+                        <option value="">— Choose staff —</option>
+                        @foreach($staff as $person)
+                        <option value="{{ $person->id }}" {{ old('staff_id')==$person->id?'selected':'' }}>
+                            {{ $person->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @error('staff_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                </div>
             </div>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
                 <div>
-                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Date *</label>
-                    <input type="date" name="appointment_date" value="{{ old('appointment_date') }}" class="input">
-                    @error('appointment_date')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Service Type *</label>
+                    <input type="text" name="service_type" value="{{ old('service_type') }}" placeholder="e.g. PC Repair, Virus Removal" class="input" style="width:100%;">
+                    @error('service_type')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
                 </div>
+
                 <div>
-                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Time *</label>
-                    <input type="time" name="appointment_time" value="{{ old('appointment_time') }}" class="input">
-                    @error('appointment_time')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Status *</label>
+                    <select name="status" class="input" style="width:100%;">
+                        <option value="scheduled" {{ old('status')=='scheduled'?'selected':'' }}>Scheduled</option>
+                        <option value="confirmed" {{ old('status')=='confirmed'?'selected':'' }}>Confirmed</option>
+                        <option value="completed" {{ old('status')=='completed'?'selected':'' }}>Completed</option>
+                        <option value="cancelled" {{ old('status')=='cancelled'?'selected':'' }}>Cancelled</option>
+                        <option value="no_show" {{ old('status')=='no_show'?'selected':'' }}>No Show</option>
+                    </select>
+                    @error('status')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
                 </div>
             </div>
 
             <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Status *</label>
-                <select name="status" class="input">
-                    <option value="scheduled" {{ old('status')=='scheduled'?'selected':'' }}>Scheduled</option>
-                    <option value="confirmed" {{ old('status')=='confirmed'?'selected':'' }}>Confirmed</option>
-                    <option value="completed" {{ old('status')=='completed'?'selected':'' }}>Completed</option>
-                    <option value="cancelled" {{ old('status')=='cancelled'?'selected':'' }}>Cancelled</option>
-                    <option value="no_show"   {{ old('status')=='no_show'  ?'selected':'' }}>No Show</option>
-                </select>
-                @error('status')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Date & Time *</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                    <div>
+                        <input type="date" name="appointment_date" value="{{ old('appointment_date') }}" class="input" style="width:100%;">
+                        @error('appointment_date')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    </div>
+                    <div>
+                        <input type="time" name="appointment_time" value="{{ old('appointment_time') }}" class="input" style="width:100%;">
+                        @error('appointment_time')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                    </div>
+                </div>
             </div>
 
             <div style="margin-bottom:28px;">

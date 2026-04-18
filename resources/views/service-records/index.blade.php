@@ -8,16 +8,11 @@
 
 {{-- Filter Form --}}
 <div class="card p-6 mb-8">
-    <h3 style="font-size:14px;font-weight:600;color:#1A1A1A;margin-bottom:16px;">Filters</h3>
-    <form method="GET" action="{{ route('service-records.index') }}" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;align-items:flex-end;">
+    <h3 style="font-size:14px;font-weight:600;color:#1A1A1A;margin-bottom:16px;">Quick Search & Filters</h3>
+    <form method="GET" action="{{ route('service-records.index') }}" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:16px;align-items:flex-end;">
         <div>
-            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Client Name</label>
-            <input type="text" name="client" value="{{ request('client') }}" class="input" placeholder="Search by name" style="width:100%;">
-        </div>
-
-        <div>
-            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Service Type</label>
-            <input type="text" name="service_type" value="{{ request('service_type') }}" class="input" placeholder="e.g., Laptop Repair" style="width:100%;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Search (Client or Service)</label>
+            <input type="text" name="search" value="{{ request('search') }}" class="input" placeholder="Search by client name or service type" style="width:100%;">
         </div>
 
         <div>
@@ -32,11 +27,11 @@
 
         <div>
             <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Remarks</label>
-            <input type="text" name="remarks" value="{{ request('remarks') }}" class="input" placeholder="Search remarks" style="width:100%;">
+            <input type="text" name="remarks" value="{{ request('remarks') }}" class="input" placeholder="Filter remarks" style="width:100%;">
         </div>
 
         <div style="display:flex;gap:8px;">
-            <button type="submit" class="btn-primary px-4 py-2 text-sm font-medium" style="flex:1;">Apply Filters</button>
+            <button type="submit" class="btn-primary px-4 py-2 text-sm font-medium">Search</button>
             <a href="{{ route('service-records.index') }}" class="btn-secondary px-4 py-2 text-sm font-medium">Clear</a>
         </div>
     </form>

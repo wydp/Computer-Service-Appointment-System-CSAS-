@@ -12,21 +12,35 @@
     <p class="page-sub">Update appointment details and status</p>
 </div>
 
-<div style="max-width:600px;margin:0 auto;">
+<div style="max-width:1000px;margin:0 auto;">
     <div class="card p-7">
         <form method="POST" action="{{ route('appointments.update', $appointment) }}">
             @csrf @method('PUT')
 
-            <div style="margin-bottom:20px;">
-                <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Client *</label>
-                <select name="client_id" class="input">
-                    @foreach($clients as $client)
-                    <option value="{{ $client->id }}" {{ old('client_id',$appointment->client_id)==$client->id?'selected':'' }}>
-                        {{ $client->full_name }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('client_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Client *</label>
+                    <select name="client_id" class="input" style="width:100%;">
+                        @foreach($clients as $client)
+                        <option value="{{ $client->id }}" {{ old('client_id',$appointment->client_id)==$client->id?'selected':'' }}>
+                            {{ $client->full_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @error('client_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                </div>
+
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">Staff *</label>
+                    <select name="staff_id" class="input" style="width:100%;">
+                        @foreach($staff as $member)
+                        <option value="{{ $member->id }}" {{ old('staff_id',$appointment->staff_id)==$member->id?'selected':'' }}>
+                            {{ $member->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @error('staff_id')<p style="color:#DC2626;font-size:12px;margin-top:6px;">{{ $message }}</p>@enderror
+                </div>
             </div>
 
             <div style="margin-bottom:20px;">

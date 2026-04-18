@@ -13,24 +13,18 @@ class ServiceRecordController extends Controller
     {
         $query = ServiceRecord::with(['client', 'staff', 'appointment'])->latest();
 
-        // Filter by client name
-        if ($request->has('client') && !empty($request->client)) {
-            $query->whereHas('client', function ($q) use ($request) {
-                $q->where('first_name', 'like', '%' . $request->client . '%')
-                  ->orWhere('last_name', 'like', '%' . $request->client . '%');
+        // Combined search for client name OR service type
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('client', function ($clientQuery) use ($search) {
+                    $clientQuery->where('first_name', 'like', '%' . $search . '%')
+                              ->orWhere('last_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('appointment', function ($appointmentQuery) use ($search) {
+                    $appointmentQuery->where('service_type', 'like', '%' . $search . '%');
+                });
             });
-        }
-
-        // Filter by service type
-        if ($request->has('service_type') && !empty($request->service_type)) {
-            $query->whereHas('appointment', function ($q) use ($request) {
-                $q->where('service_type', $request->service_type);
-            });
-        }
-
-        // Filter by staff
-        if ($request->has('staff_id') && !empty($request->staff_id)) {
-            $query->where('staff_id', $request->staff_id);
         }
 
         // Filter by date range

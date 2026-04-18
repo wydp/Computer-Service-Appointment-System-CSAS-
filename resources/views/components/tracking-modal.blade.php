@@ -84,13 +84,13 @@ const STATUS_ICONS = {
 
 function getProgressBar(status) {
     const progressMap = {
-        'scheduled': { percent: 25, color: '#666666' },
-        'confirmed': { percent: 50, color: '#000000' },
-        'completed': { percent: 100, color: '#00AA00' },
-        'cancelled': { percent: 100, color: '#CC0000' },
-        'no_show': { percent: 100, color: '#FF6600' }
+        'scheduled': { percent: 33, color: '#666666', animated: true },
+        'confirmed': { percent: 66, color: '#000000', animated: true },
+        'completed': { percent: 100, color: '#00AA00', animated: false },
+        'cancelled': { percent: 100, color: '#CC0000', animated: false },
+        'no_show': { percent: 100, color: '#FF6600', animated: false }
     };
-    return progressMap[status] || { percent: 0, color: '#666666' };
+    return progressMap[status] || { percent: 0, color: '#666666', animated: true };
 }
 
 function openTrackingModal(appointmentId) {
@@ -123,9 +123,22 @@ function openTrackingModal(appointmentId) {
 
             // Update progress bar
             const progress = getProgressBar(data.appointment.status);
-            document.getElementById('progressBar').style.width = progress.percent + '%';
-            document.getElementById('progressBar').style.backgroundColor = progress.color;
-            document.getElementById('progressPercentage').textContent = progress.percent + '%';
+            const progressBar = document.getElementById('progressBar');
+            const progressPercentage = document.getElementById('progressPercentage');
+
+            if (progressBar && progressPercentage) {
+                progressBar.style.width = progress.percent + '%';
+                progressBar.style.backgroundColor = progress.color;
+                progressPercentage.textContent = progress.percent + '%';
+                progressPercentage.style.color = progress.color;
+
+                // Add animation class for in-progress appointments
+                if (progress.animated) {
+                    progressBar.style.animation = 'pulse 2s infinite';
+                } else {
+                    progressBar.style.animation = 'none';
+                }
+            }
 
             // Populate history timeline
             const timeline = document.getElementById('trackingTimeline');
@@ -173,6 +186,15 @@ document.getElementById('trackingModal')?.addEventListener('click', function(e) 
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
     }
 }
 </style>

@@ -89,6 +89,9 @@
 
 {{-- Quick Actions --}}
 <div class="grid grid-cols-2 gap-6 mb-8">
+</div>
+
+{{-- Activity Sections --}}
 <div class="grid grid-cols-3 gap-6">
     {{-- Upcoming Appointments --}}
     <div class="card overflow-hidden">
